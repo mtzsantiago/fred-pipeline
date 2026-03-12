@@ -1,0 +1,5 @@
+venv/
+.env
+airflow/logs/
+__pycache__/
+.dbt/

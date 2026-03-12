@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw
+    database: freddb
+    schema: public
+    tables:
+      - name: raw_fred_observations
+        description: "Raw economic indicator data ingested from FRED API"
+        columns:
+          - name: series_id
+            description: "FRED series identifier"
+          - name: obs_date
+            description: "Date of the observation"
+          - name: value
+            description: "Observed value"
