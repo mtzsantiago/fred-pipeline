@@ -6,7 +6,7 @@ Built as a portfolio project to demonstrate a realistic data engineering workflo
 
 ![Dashboard Preview](assets/dashboard.png)
 
-[View Full Dashboard PDF](assets/dashboard.pdf)
+[View Full Dashboard PDF](assets/Dashboard.pdf)
 
 ---
 
