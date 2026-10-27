@@ -54,10 +54,12 @@ fred-pipeline/
 ├── airflow/
 │   ├── dags/
 │   │   └── fred_ingestion_dag.py   # Airflow DAG definition
-│   ├── logs/
-│   └── plugins/
+│   ├── logs/                       # created at setup
+│   └── plugins/                    # created at setup
+├── assets/                         # dashboard screenshot and PDF
 ├── dbt/
 │   └── fred_dbt/
+│       ├── dbt_project.yml
 │       └── models/
 │           ├── sources.yml
 │           ├── staging/
@@ -94,7 +96,7 @@ stg_fred_observations       -- light cleaning, adds series_name and unit columns
 ### Prerequisites
 
 - Docker Desktop (or Docker Engine + Docker Compose plugin)
-- Python 3.8+
+- Python 3.9+
 - A free [FRED API key](https://fred.stlouisfed.org/docs/api/api_key.html)
 
 ### 1. Clone the repo
@@ -125,6 +127,9 @@ AIRFLOW_UID=1000
 ### 3. Set Airflow permissions
 
 ```bash
+mkdir -p airflow/logs airflow/plugins
+sudo chown -R 50000:0 airflow/logs airflow/dags airflow/plugins
+echo -e "AIRFLOW_UID=$(id -u)" >> .env
 sudo chown -R 50000:0 airflow/logs airflow/dags airflow/plugins
 echo -e "AIRFLOW_UID=$(id -u)" >> .env
 ```
@@ -148,6 +153,24 @@ Open [http://localhost:8080](http://localhost:8080) and log in with `admin` / `a
 Find the `fred_ingestion` DAG and click the play button to trigger a run.
 
 ### 7. Run dbt transformations
+
+dbt needs a connection profile. Create `~/.dbt/profiles.yml` (on Windows: `C:\Users\<your_user>\.dbt\profiles.yml`) with:
+
+```yaml
+fred_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: freduser
+      password: fredpass
+      dbname: freddb
+      schema: analytics
+```
+
+Then run:
 
 ```bash
 cd dbt/fred_dbt
