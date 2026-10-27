@@ -100,7 +100,7 @@ stg_fred_observations       -- light cleaning, adds series_name and unit columns
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/fred-pipeline.git
+git clone https://github.com/mtzsantiago/fred-pipeline.git
 cd fred-pipeline
 ```
 
